@@ -120,7 +120,7 @@ namespace Opencraft.Player
                             if (BlockData.IsLogic(destroyedBlockType))
                             {
                                 DynamicBuffer<UpdatedBlocks> locs = _terrainUpdatedLookup[terrainAreaEntity];
-                                locs.Add(new UpdatedBlocks { updatedLoc = blockLoc });
+                                locs.Add(new UpdatedBlocks { blockLoc = blockLoc });
                             }
                         }
                     }
@@ -161,7 +161,7 @@ namespace Opencraft.Player
                             if (BlockData.IsLogic(blockToPlace))
                             {
                                 DynamicBuffer<UpdatedBlocks> locs = _terrainUpdatedLookup[terrainAreaEntity];
-                                locs.Add(new UpdatedBlocks { updatedLoc = blockLoc });
+                                locs.Add(new UpdatedBlocks { blockLoc = blockLoc });
                             }
                             DynamicBuffer<bool> boolLogicStates = _terrainLogicStateLookup[terrainAreaEntity].Reinterpret<bool>();
                             boolLogicStates[blockIndex] = false;
@@ -184,14 +184,14 @@ namespace Opencraft.Player
                             blocks[blockIndex] = BlockType.On_Input;
                             boolLogicStates[blockIndex] = true;
                             DynamicBuffer<UpdatedBlocks> locs = _terrainUpdatedLookup[terrainAreaEntity];
-                            locs.Add(new UpdatedBlocks { updatedLoc = blockLoc });
+                            locs.Add(new UpdatedBlocks { blockLoc = blockLoc });
                         }
                         else if (blocks[blockIndex] == BlockType.On_Input)
                         {
                             blocks[blockIndex] = BlockType.Off_Input;
                             boolLogicStates[blockIndex] = false;
                             DynamicBuffer<UpdatedBlocks> locs = _terrainUpdatedLookup[terrainAreaEntity];
-                            locs.Add(new UpdatedBlocks { updatedLoc = blockLoc });
+                            locs.Add(new UpdatedBlocks { blockLoc = blockLoc });
                         }
                     }
                 }

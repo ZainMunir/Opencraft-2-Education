@@ -609,7 +609,7 @@ namespace Opencraft.Terrain
                 if (BlockData.IsInput(blockType) || BlockData.IsGate(blockType))
                 {
                     Entity terrainEntity = terrainAreaEntities[index + colY];
-                    terrainUpdateLookup[terrainEntity].Add(new UpdatedBlocks { updatedLoc = TerrainUtilities.BlockIndexToLocation(blockIndex + localY) });
+                    terrainUpdateLookup[terrainEntity].Add(new UpdatedBlocks { blockLoc = TerrainUtilities.BlockIndexToLocation(blockIndex + localY) });
                 }
                 prevColY = colY;
             }

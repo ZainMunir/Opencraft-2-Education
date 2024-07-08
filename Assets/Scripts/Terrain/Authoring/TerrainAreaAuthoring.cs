@@ -38,6 +38,9 @@ namespace Opencraft.Terrain.Authoring
                 AddBuffer<BlockLogicState>(entity);
                 AddBuffer<BlockDirection>(entity);
                 AddBuffer<UpdatedBlocks>(entity);
+                AddBuffer<InputBlocks>(entity);
+                AddBuffer<GateBlocks>(entity);
+                AddBuffer<ActiveGateBlocks>(entity);
                 AddBuffer<TerrainColMinY>(entity);
                 AddBuffer<TerrainColMaxY>(entity);
                 AddBuffer<TerrainStructuresToSpawn>(entity);
@@ -102,8 +105,28 @@ namespace Opencraft.Terrain.Authoring
     [InternalBufferCapacity(0)]
     public struct UpdatedBlocks : IBufferElementData
     {
-        [GhostField] public int3 updatedLoc;
+        [GhostField] public int3 blockLoc;
     }
+
+    [InternalBufferCapacity(0)]
+    public struct InputBlocks : IBufferElementData
+    {
+        [GhostField] public int3 blockLoc;
+    }
+
+    [InternalBufferCapacity(0)]
+    public struct GateBlocks : IBufferElementData
+    {
+        [GhostField] public int3 blockLoc;
+    }
+
+    [InternalBufferCapacity(0)]
+    public struct ActiveGateBlocks : IBufferElementData
+    {
+        [GhostField] public int3 blockLoc;
+    }
+
+
 
     [InternalBufferCapacity(256)]
     // The buffer component to store heightmap column min
