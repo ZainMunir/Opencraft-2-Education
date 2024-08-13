@@ -128,6 +128,9 @@ when run standalone. In editor, the hierarchy of configuration is `Deployment Gr
 | -profiler-maxusedmemory     | _int_                                                                        | 16000000                                                 | Max memory used by profiler in bytes. Default is 16MB.               |
 | -logStats                   | true/false                                                                   | false                                                    | Log relevant Profiler statistics to file.                            |
 | -statsFile                  | _FilePath_                                                                   | Application.persistentDataPath\stats.csv                 | What file to log statistics to.                                      |
+| -activeLogic                | true/false                                                                   | false                                                    | Enable/disable the logic system.                                     |
+| -circuitX / -circuitY       | _int_                                                                        | 1                                                        | Choose length of circuits to spawn on that axis.                     |
+| -tickSpeed				  | _int_                                                                        | 1000                                                     | Set the tick speed of the logic system (milliseconds).               |
 
 ### Deployment Configuration
 The deployment service constructs a deployment graph based on a configuration file. The deployment configuration file path is set

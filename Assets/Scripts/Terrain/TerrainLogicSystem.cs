@@ -68,7 +68,7 @@ namespace Opencraft.Terrain
                 return;
             }
             state.RequireForUpdate<TerrainArea>();
-            tickRate = 1;
+            tickRate = ApplicationConfig.TickSpeed.Value;
             timer = 0;
             tickCount = 0;
             inputBlocks = new Dictionary<int3, LogicBlockData>();
@@ -95,7 +95,7 @@ namespace Opencraft.Terrain
             if (!isRunning) return;
             if (timer < tickRate)
             {
-                timer += Time.deltaTime;
+                timer += Time.deltaTime * 1000; // milliseconds
                 return;
             }
             _markerTerrainLogic.Begin();
@@ -178,7 +178,7 @@ namespace Opencraft.Terrain
 
         private void PropagateLogicState(IEnumerable<LogicBlockData> logicBlocks, bool inputLogicState)
         {
-            ConcurrentQueue<(LogicBlockData, bool)> logicQueue = new ConcurrentQueue<(LogicBlockData, bool)>();
+            Queue<(LogicBlockData, bool)> logicQueue = new Queue<(LogicBlockData, bool)>();
             foreach (LogicBlockData block in logicBlocks)
             {
                 logicQueue.Enqueue((block, inputLogicState));
@@ -233,7 +233,7 @@ namespace Opencraft.Terrain
             logicState = boolLogicStates[blockIndex];
         }
 
-        private void EvaluateNotGate(Direction currentOutputDirection, int3 blockLoc, ref Entity[] terrainEntities, ref ConcurrentQueue<(LogicBlockData, bool)> logicQueue)
+        private void EvaluateNotGate(Direction currentOutputDirection, int3 blockLoc, ref Entity[] terrainEntities, ref Queue<(LogicBlockData, bool)> logicQueue)
         {
             Direction inputDirection = BlockData.OppositeDirections[(int)currentOutputDirection];
             int3 notNormalizedBlockLoc = blockLoc + BlockData.Int3Directions[(int)inputDirection];
@@ -252,7 +252,7 @@ namespace Opencraft.Terrain
             EvaluateNeighbour(currentOutputDirection, blockLoc, ref terrainEntities, !notInputState, ref logicQueue);
         }
 
-        private void EvaluateNeighbour(Direction outputDirection, int3 blockLoc, ref Entity[] terrainEntities, bool logicState, ref ConcurrentQueue<(LogicBlockData, bool)> logicQueue)
+        private void EvaluateNeighbour(Direction outputDirection, int3 blockLoc, ref Entity[] terrainEntities, bool logicState, ref Queue<(LogicBlockData, bool)> logicQueue)
         {
             int3 direction = BlockData.Int3Directions[(int)outputDirection];
             int3 notNormalisedBlockLoc = (blockLoc + direction);
@@ -284,7 +284,7 @@ namespace Opencraft.Terrain
         }
         private void CheckGateState(in IEnumerable<LogicBlockData> gateBlocks)
         {
-            var gateQueue = new ConcurrentQueue<LogicBlockData>(gateBlocks);
+            var gateQueue = new Queue<LogicBlockData>(gateBlocks);
 
             while (gateQueue.TryDequeue(out var gateBlock))
             {
